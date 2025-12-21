@@ -58,7 +58,7 @@ const Main = () => {
         (
           <div className='result'>
              {prevPrompts.map((message, index) => (
-                <div key={index} className={`result-message ${message.sender}`}>                        <p>{message.text}</p>
+                <div key={index} className={`result-message ${message.sender}`}>  <p>{message.text}</p>
                      </div>
                   ))}
                         {loading && (

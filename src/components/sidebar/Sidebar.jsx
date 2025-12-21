@@ -22,7 +22,7 @@ const Sidebar = () => {
           {extended
           ?
           <div className="recent">
-            <p className="recent-title">Recent</p>
+           <p className="recent-title">Recent</p>
             <div className="recent-entry">
               <img src={comment} alt="" />
               <p>What is react...</p>

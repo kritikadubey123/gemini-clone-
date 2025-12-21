@@ -67,24 +67,3 @@ const ContextProvider = (props) => {
 
 export default ContextProvider;
       
-
-     /*   try {
-            const responseText = await runGemini(prompt);
-            setResultData(prev => [...prev, { sender: 'ai', text: responseText }]); 
-        } catch (error) {
-            setResultData(prev => [...prev, { sender: 'ai', text: "Error: Could not get response." }]);
-        } finally {
-            setLoading(false);
-        }
-    };
-    
-    const contextValue = {prevPrompts, setPrevPrompts, onSent, setRecentPrompt, recentPrompt, showResult, loading, resultData, input, setInput,};
-
-    return (
-        <Context.Provider value={contextValue}>
-            {props.children}
-        </Context.Provider>
-    );
-};
-export default ContextProvider;
-*/
