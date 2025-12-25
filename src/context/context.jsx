@@ -13,23 +13,22 @@ const ContextProvider = (props) => {
     const [resultData, setResultData] = useState(""); 
     
 
-    const onSent = async () => {
-
-         const sentText = input.trim();
+    const onSent = async (prompt) => {
+         const sentText = prompt === undefined ? input.trim() : prompt;
            if (!sentText) return;
      
-        setResultData("")
+        setResultData(" ")
         setLoading(true)
         setShowResult(true)
-
+    
          setRecentPrompt(sentText);
-         setPrevPrompts((prev) => [...prev, { sender: "user", text: sentText }]);
+         
+           setPrevPrompts((prev) => [...prev, { sender: "user", text: sentText }]);
+         
         
          try {
-      // Call the API with the exact prompt that was sent
       const response = await runGemini(sentText);
 
-      // Response expected as string: put into resultData and (optionally) into history
       setResultData(response || ""); 
       setPrevPrompts((prev) => [...prev, { sender: "ai", text: response || "" }]);
     } catch (err) {
@@ -41,10 +40,10 @@ const ContextProvider = (props) => {
       ]);
     } finally {
       setLoading(false);
-      setInput(""); // clear the input box after sending
+       setInput("")
     }
   };
-
+        
   const contextValue = {
     prevPrompts,
     setPrevPrompts,
@@ -66,4 +65,3 @@ const ContextProvider = (props) => {
 };
 
 export default ContextProvider;
-      

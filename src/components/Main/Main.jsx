@@ -9,17 +9,24 @@ import mic from '../../assets/mic.png';
 import send  from '../../assets/send.png';
 import gall from '../../assets/gall.png';
 import runGemini  from '../../config/gemini';
-import  {Context}  from '../../context/context';
-
+import  {Context} from  '../../context/context';
 
 
 const Main = () => {
-   const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, prevPrompts} = useContext(Context)
+   const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, prevPrompts} = useContext(Context);
 
-    const handleSend = () => {
-        onSent(input);
+   const card1Text = "Suggest beautiful places to see on an upcoming road trip";
+   const card2Text = "Briefly summarize this concept: urban planning"
+   const card3Text = "Brainstorm team bonding activities for our work retreat"
+   const card4Text = "Improve the readability of the following code"
+
+    const handleSend = (prompt) => {
+
+        const finalPrompt = prompt || input ;
+        if(finalPrompt.trim() != ""){
+        onSent(finalPrompt);
+        }
     };
-
 
   return (
     <div className='main'>
@@ -36,20 +43,20 @@ const Main = () => {
             <p>How can I help you today?</p>
         </div>
         <div className="cards">
-            <div className="card">
-                <p>Suggest beautiful places to see on an upcoming road trip</p>
+            <div className="card" onClick={() =>handleSend(card1Text)} >
+                <p>{card1Text}</p>
                 <img src={compass} alt="" />
             </div>
-             <div className="card">
-                <p>Briefly summarize this concept: urban planning</p>
+             <div className="card" onClick={() => handleSend(card2Text)}>
+                <p>{card2Text}</p>
                 <img src={idea} alt="" />
             </div>
-             <div className="card">
-                <p>Brainstorm team bonding activities for our work retreat</p>
+             <div className="card" onClick={() => handleSend(card3Text)}>
+                <p>{card3Text}</p>
                 <img src={comment} alt="" />
             </div>
-             <div className="card">
-                <p>Improve the readability of the following code</p>
+             <div className="card" onClick={() => handleSend(card4Text)}>
+                <p>{card4Text}</p>
                 <img src={code} alt="" />
             </div>
         </div>
@@ -61,11 +68,11 @@ const Main = () => {
                 <div key={index} className={`result-message ${message.sender}`}>  <p>{message.text}</p>
                      </div>
                   ))}
-                        {loading && (
+                        {loading ? (
                             <div className='typing-indicator'>
                                 <p>Gemini is typing...</p>
                             </div>
-                        )}
+                        ) : null}
                     </div>
                 )}
         <div className="main-bottom">
@@ -76,6 +83,7 @@ const Main = () => {
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && input.trim() !== '' && !loading) {
                                     handleSend();
+                                    setInput("")
                                 }
                             }}
                             disabled={loading}

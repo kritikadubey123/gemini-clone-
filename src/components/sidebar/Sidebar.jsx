@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './sidebar.css'
 import menu1 from "../../assets/menu1.png";
 import plus from "../../assets/plus.png";
@@ -6,10 +6,19 @@ import comment from "../../assets/comment.png";
 import question from "../../assets/question.png";
 import history from "../../assets/history.png";
 import setting from "../../assets/setting.png";
+import { Context } from '../../context/context';
+import runGemini  from '../../config/gemini';
+import Main from '../Main/Main'
 
 const Sidebar = () => {
 
+  const handle = (prompt) =>{
+      onSent(prompt)
+  }
+
   const [extended, setExtended] = useState(false);
+  
+  const {prevPrompts, onSent} = useContext(Context);
   return (
         <div className='sidebar'>
         <div className="top">
@@ -20,17 +29,19 @@ const Sidebar = () => {
           </div>
           
           {extended
-          ?
-          <div className="recent">
+          &&
+          (<div className="recent">
            <p className="recent-title">Recent</p>
-            <div className="recent-entry">
-              <img src={comment} alt="" />
-              <p>What is react...</p>
+          {prevPrompts
+          .filter(item => item.sender === "user")
+               .map((prompt, index) => (
+             <div className="recent-entry" key={index} onClick={() => handle(prompt.text)}>
+               <img src={comment} alt="" />
+               <p>{prompt.text.slice(0, 15)}...</p>
+             </div>
+           ))}
             </div>
-          </div>
-          :null
-        }
-
+          )}
         </div>
 
         <div className="bottom">

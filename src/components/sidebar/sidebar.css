@@ -46,9 +46,10 @@ img{
     border-radius: 50px;
     color: #282828;
     cursor: pointer;
+    background-color: aliceblue;
 }
-.sidebar .recent-entry :hover{
-    background-color: #e2e6eb;
+.sidebar .recent-entry:hover{
+    background-color: gainsboro;
 }
 .sidebar .bottom{
       display: flex;
